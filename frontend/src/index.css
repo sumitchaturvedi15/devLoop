@@ -2,5 +2,5 @@
 @plugin "daisyui";
 
  @plugin "daisyui" {
-   themes: synthwave --default, synthwave --prefersdark;
+   themes: abyss --default, abyss --prefersdark;
  }
