@@ -25,7 +25,7 @@ authRouter.post("/login",async(req,res)=>{
         if(isPasswordValid){
             const token=await jwt.sign({_id:user._id},"Keytoken");
             res.cookie("token",token);
-            res.send("Login Successfully");
+            res.send(user);
         }
         else{
             throw new Error("Wrong Password");
