@@ -1,12 +1,15 @@
+import { useSelector } from 'react-redux';
 import devLoopLogo from '../Images/devLoop.png';
 const Navbar = () => {
+  const user= useSelector((store)=>store.user);
   return (
     <div className="navbar bg-base-200 shadow-sm">
       <div className="flex-1">
         <img src={devLoopLogo} alt="devLoop logo" className="h-8 w-auto ml-2"/>
         {/* <a className="btn btn-ghost text-xl">devLoop</a> */}
       </div>
-      <div className="flex gap-2">
+      {user && (<div className="flex gap-2">
+        <div className='form-control my-2'>Welcome, {user.firstName}</div>
         <div className="dropdown dropdown-end mx-5">
           <div
             tabIndex={0}
@@ -16,7 +19,7 @@ const Navbar = () => {
             <div className="w-10 rounded-full">
               <img
                 alt="Tailwind CSS Navbar component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                src={user.photoUrl}
               />
             </div>
           </div>
@@ -38,7 +41,7 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
-      </div>
+      </div>)}
     </div>
   );
 };
