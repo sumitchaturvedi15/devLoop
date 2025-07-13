@@ -46,11 +46,11 @@ const userSchema= new mongoose.Schema({
         default:"https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
     },
     skills:{
-        type:[String]
+        type:[String],
     },
     about:{
         type:String,
-        maxlength: 500
+        maxlength: 100
     },
     height:{
         type:Number

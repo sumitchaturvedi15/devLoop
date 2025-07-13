@@ -29,10 +29,11 @@ userRouter.get("/user/connections", userAuth, async (req,res)=>{
                 {fromUser:user._id, status:"accepted"}, 
                 {toUser:user._id, status:"accepted"}
             ]
-        }).populate("fromUser",["firstName","lastName","skills","gender","age"]).populate("toUser",["firstName","lastName","skills","gender","age"]);
+        }).populate("fromUser",["firstName","lastName","photoUrl","skills","languages","about","gender","age","height"])
+        .populate("toUser",["firstName","lastName","photoUrl","skills","languages","about","gender","age","height"]);
         const connectionData=data.map((row)=>{
             if(row.fromUser._id.toString() === user._id.toString()){
-                return row.user;
+                return row.toUser;
             }
             return row.fromUser;
         });
@@ -64,7 +65,7 @@ userRouter.get("/feed", userAuth, async (req,res)=>{
                 {_id: {$nin: Array.from(uniqueConnection)} },
                 {_id: {$ne: user._id}}
             ]
-        }).select("firstName lastName photoUrl age gender skills").skip(skip).limit(limit);
+        }).select("firstName lastName photoUrl age gender skills languages height").skip(skip).limit(10);
         res.send(users);
     }
     catch(err){

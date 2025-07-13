@@ -9,12 +9,13 @@ import { BASE_URL } from "../utils/constants";
 const Login = () => {
   const [emailId, setEmailId] = useState("shraddha@gmail.com");
   const [password, setPassword] = useState("Shraddha@123");
-  const dispatch= useDispatch();
-  const navigate= useNavigate();
+  const [error, setError] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleLogin = async () => {
     try {
       const res = await axios.post(
-        BASE_URL+"/login",
+        BASE_URL + "/login",
         {
           email: emailId,
           password: password,
@@ -26,6 +27,7 @@ const Login = () => {
       dispatch(addUser(res.data));
       return navigate("/feed");
     } catch (err) {
+      setError(err?.response?.data || "Something went wrong.");
       console.log(err);
     }
   };
@@ -51,6 +53,9 @@ const Login = () => {
             placeholder="Type here"
             onChange={(e) => setPassword(e.target.value)}
           />
+          <div role="alert" className="bg-base-200">
+            <span className="text-red-500">{error}</span>
+          </div>
           <div className="card-actions justify-center my-2 ">
             <button className="btn bg-base-100" onClick={handleLogin}>
               Login

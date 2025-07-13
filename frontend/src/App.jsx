@@ -4,6 +4,8 @@ import Login from "./Components/Login";
 import userStore from './utils/appStore'
 import { Provider } from 'react-redux'
 import {BrowserRouter, Routes, Route} from "react-router-dom";
+import Profile from "./Components/Profile";
+import Connections from "./Components/Connections";
 function App() {
   return (
     <>
@@ -13,7 +15,8 @@ function App() {
             <Route path="/" element={<div><Body/></div>}>
               <Route path="/feed" element={<div><Feed/></div>} />
               <Route path="/login" element={<div><Login/></div>} />
-              <Route path="/profile" element={<div>Profile</div>} />
+              <Route path="/profile" element={<div><Profile/></div>} />
+              <Route path="/connections" element={<div><Connections/></div>} />
             </Route>
           </Routes>
         </BrowserRouter>

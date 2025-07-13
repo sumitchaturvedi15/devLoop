@@ -28,7 +28,7 @@ authRouter.post("/login",async(req,res)=>{
             res.send(user);
         }
         else{
-            throw new Error("Wrong Password");
+            throw new Error("Invalid Credentials!");
         }
     }
     catch(err){
@@ -41,13 +41,19 @@ authRouter.post("/signUp",async(req,res)=>{
     try{
         const data=req.body;
         isValidated(data);
-        const {firstName, lastName, email, password}=data;
+        const {firstName, lastName, email, password, gender, age, height, languages, skills, photoUrl}=data;
         const passwordHash= await bcrypt.hash(password,10);
         const user= new User({
             firstName,
             lastName,
             email,
-            password:passwordHash
+            password:passwordHash,
+            gender,
+            age,
+            height,
+            languages,
+            skills,
+            photoUrl
         });
         await user.save();
         res.send("User Signed Up");
