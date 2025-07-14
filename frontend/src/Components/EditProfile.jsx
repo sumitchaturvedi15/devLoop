@@ -46,150 +46,154 @@ const EditProfile = ({ user }) => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row w-full min-h-screen bg-gradient-to-tr from-pink-50 via-purple-100 to-pink-50">
-      <div className="card bg-base-300 shadow-lg flex flex-col items-center p-8 space-y-5 w-full lg:w-1/2 rounded-none min-h-screen">
-        <h2 className="text-3xl  mb-2">Edit Profile</h2>
+    <div className="flex flex-col lg:flex-row w-full min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white">
+      {/* Form Section */}
+      <div className="flex flex-col items-center p-8 gap-6 w-full lg:w-1/2 border-b lg:border-b-0 lg:border-r border-gray-800">
+        <h2 className="text-3xl font-bold text-indigo-400 mb-2">Edit Profile</h2>
 
-        <fieldset className="w-4/5">
-          <legend className="text-sm text-gray-600">First Name:</legend>
+        <fieldset className="w-full max-w-md">
+          <legend className="text-sm text-gray-400 mb-1">First Name:</legend>
           <input
             type="text"
             value={firstName}
-            className="input input-bordered w-full rounded-md"
+            className="w-full bg-gray-800 text-white rounded-md px-4 py-2 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-600"
             placeholder={user.firstName}
             onChange={(e) => setFirstName(e.target.value)}
           />
         </fieldset>
 
-        <fieldset className="w-4/5">
-          <legend className="text-sm text-gray-600">Last Name:</legend>
+        <fieldset className="w-full max-w-md">
+          <legend className="text-sm text-gray-400 mb-1">Last Name:</legend>
           <input
             type="text"
             value={lastName}
-            className="input input-bordered w-full rounded-md"
+            className="w-full bg-gray-800 text-white rounded-md px-4 py-2 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-600"
             placeholder="Type here"
             onChange={(e) => setLastName(e.target.value)}
           />
         </fieldset>
 
-        <fieldset className="w-4/5">
-          <legend className="text-sm text-gray-600">Gender:</legend>
+        <fieldset className="w-full max-w-md">
+          <legend className="text-sm text-gray-400 mb-1">Gender:</legend>
           <select
-            className="select select-bordered w-full rounded-md"
+            className="w-full bg-gray-800 text-white rounded-md px-4 py-2 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-600"
             value={gender}
             onChange={(e) => setGender(e.target.value)}
           >
-            <option value="">
-              Select Gender
-            </option>
+            <option value="">Select Gender</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
             <option value="other">Other</option>
           </select>
         </fieldset>
 
-        <fieldset className="w-4/5">
-          <legend className="text-sm text-gray-600">Age:</legend>
+        <fieldset className="w-full max-w-md">
+          <legend className="text-sm text-gray-400 mb-1">Age:</legend>
           <input
             value={age}
             type="number"
-            className="input input-bordered w-full rounded-md"
+            className="w-full bg-gray-800 text-white rounded-md px-4 py-2 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-600"
             required
             placeholder="Age"
             min="18"
             max="150"
-            title="Enter your age"
             onChange={(e) => setAge(e.target.value)}
           />
         </fieldset>
 
-        <fieldset className="w-4/5">
-          <legend className="text-sm text-gray-600">Height:</legend>
+        <fieldset className="w-full max-w-md">
+          <legend className="text-sm text-gray-400 mb-1">Height (cm):</legend>
           <input
             value={height}
             type="number"
-            className="input input-bordered w-full rounded-md"
+            className="w-full bg-gray-800 text-white rounded-md px-4 py-2 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-600"
             required
             placeholder="Height"
             min="100"
             max="500"
-            title="Enter your height (cms)"
             onChange={(e) => setHeight(e.target.value)}
           />
         </fieldset>
 
-        <fieldset className="w-4/5">
-          <legend className="text-sm text-gray-600">Profile Picture:</legend>
+        <fieldset className="w-full max-w-md">
+          <legend className="text-sm text-gray-400 mb-1">Profile Picture URL:</legend>
           <input
             value={photoUrl}
             type="url"
-            className="input input-bordered w-full rounded-md"
-            placeholder="Profile Picture"
+            className="w-full bg-gray-800 text-white rounded-md px-4 py-2 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-600"
+            placeholder="Profile Picture URL"
             onChange={(e) => setPhotoUrl(e.target.value)}
           />
         </fieldset>
 
-        <fieldset className="w-4/5">
-          <legend className="text-sm text-gray-600">Skills:</legend>
+        <fieldset className="w-full max-w-md">
+          <legend className="text-sm text-gray-400 mb-1">Skills (comma separated):</legend>
           <input
             value={Array.isArray(skills) ? skills.join(", ") : skills}
             type="text"
-            className="input input-bordered w-full rounded-md"
-            placeholder="Skills (comma separated)"
+            className="w-full bg-gray-800 text-white rounded-md px-4 py-2 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-600"
+            placeholder="Skills"
             onChange={(e) => setSkills(e.target.value)}
           />
         </fieldset>
 
-        <fieldset className="w-4/5">
-          <legend className="text-sm text-gray-600">Language:</legend>
+        <fieldset className="w-full max-w-md">
+          <legend className="text-sm text-gray-400 mb-1">Languages:</legend>
           <input
             value={Array.isArray(languages) ? languages.join(", ") : languages}
             type="text"
-            className="input input-bordered w-full rounded-md"
+            className="w-full bg-gray-800 text-white rounded-md px-4 py-2 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-600"
             placeholder="Languages"
             onChange={(e) => setLanguages(e.target.value)}
           />
         </fieldset>
 
-        <fieldset className="w-4/5">
-          <legend className="text-sm text-gray-600">About You:</legend>
+        <fieldset className="w-full max-w-md">
+          <legend className="text-sm text-gray-400 mb-1">About You:</legend>
           <textarea
             value={about}
-            className="textarea textarea-bordered w-full rounded-md"
-            placeholder="Bio"
+            className="w-full bg-gray-800 text-white rounded-md px-4 py-2 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-600"
+            placeholder="Tell us about yourself..."
+            rows={4}
             onChange={(e) => setAbout(e.target.value)}
           ></textarea>
         </fieldset>
 
-        <fieldset className="w-4/5 mb-2">
-          <button className="btn btn-wide w-full px-2 bg-base  hover:bg-fuchsia-800" onClick={saveProfile}>
+        <fieldset className="w-full max-w-md mt-2">
+          <button
+            className="w-full bg-indigo-600 hover:bg-indigo-700 transition text-white font-semibold py-2 rounded-md shadow-md"
+            onClick={saveProfile}
+          >
             Update Profile
           </button>
         </fieldset>
 
         {setToast && (
           <div className="toast toast-top toast-start">
-            <div className="alert alert-success">
+            <div className="alert alert-success shadow-lg bg-green-700 text-white">
               <span>Profile Updated Successfully.</span>
             </div>
           </div>
         )}
       </div>
 
-      <div className="card bg-black shadow-lg flex items-center justify-center w-full lg:w-1/2 rounded-none min-h-screen">
-        <MyCard
-          user={{
-            firstName,
-            lastName,
-            photoUrl,
-            skills: Array.isArray(skills) ? skills : skills.split(",").map((s) => s.trim()),
-            languages: Array.isArray(languages) ? languages : languages.split(",").map((l) => l.trim()),
-            about,
-            gender,
-            age,
-            height,
-          }}
-        />
+      {/* MyCard Preview Section */}
+      <div className="bg-black flex items-center justify-center w-full lg:w-1/2 p-8">
+        <div className="w-full max-w-md bg-gray-900/60 rounded-xl p-6 shadow-lg border border-gray-700">
+          <MyCard
+            user={{
+              firstName,
+              lastName,
+              photoUrl,
+              skills: Array.isArray(skills) ? skills : skills.split(",").map((s) => s.trim()),
+              languages: Array.isArray(languages) ? languages : languages.split(",").map((l) => l.trim()),
+              about,
+              gender,
+              age,
+              height,
+            }}
+          />
+        </div>
       </div>
     </div>
   );

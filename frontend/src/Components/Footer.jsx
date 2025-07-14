@@ -19,44 +19,61 @@ const Footer = () => {
 
         {/* Social Icons */}
         <div className="flex gap-6 justify-center">
-          {/* Twitter */}
-          <a href="#" aria-label="Twitter">
+          {/* GitHub */}
+          <a
+            href="https://github.com/your-username"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="w-6 h-6 fill-current text-blue-400 hover:text-white transition-colors duration-200"
+              className="w-6 h-6 fill-current text-gray-300 hover:text-white transition-colors duration-200"
               viewBox="0 0 24 24"
             >
-              <path d="M23 3a10.9 10.9 0 01-3.14 1.53A4.48 4.48 0 0022.4.36a9.09 9.09 0 01-2.88 1.1A4.52 4.52 0 0016.11 0c-2.5 0-4.5 2.28-4.5 5.09 0 .4.04.79.13 1.17A12.94 12.94 0 013 1.67a5.06 5.06 0 00-.61 2.56c0 1.77.87 3.34 2.2 4.25a4.5 4.5 0 01-2.05-.57v.06c0 2.48 1.64 4.56 3.82 5.03a4.56 4.56 0 01-2.04.08c.58 1.92 2.26 3.32 4.25 3.36A9.05 9.05 0 012 19.54 12.77 12.77 0 008.29 21c7.55 0 11.68-6.29 11.68-11.75 0-.18-.01-.35-.02-.53A8.36 8.36 0 0023 3z" />
+              <path d="M12 0C5.37 0 0 5.4 0 12.08c0 5.34 3.44 9.86 8.21 11.46.6.12.82-.26.82-.58 0-.29-.01-1.05-.02-2.06-3.34.74-4.04-1.62-4.04-1.62-.55-1.42-1.35-1.8-1.35-1.8-1.1-.77.08-.76.08-.76 1.22.09 1.87 1.27 1.87 1.27 1.08 1.87 2.83 1.33 3.52 1.02.11-.8.42-1.33.76-1.63-2.67-.3-5.48-1.36-5.48-6.04 0-1.34.47-2.44 1.24-3.3-.13-.3-.54-1.51.12-3.14 0 0 1-.33 3.3 1.26a11.3 11.3 0 0 1 3.01-.41c1.02 0 2.05.14 3.01.41 2.3-1.6 3.3-1.26 3.3-1.26.66 1.63.25 2.84.12 3.14.77.86 1.24 1.96 1.24 3.3 0 4.69-2.82 5.74-5.51 6.03.43.37.82 1.1.82 2.22 0 1.6-.02 2.88-.02 3.27 0 .32.22.7.83.58A12.08 12.08 0 0 0 24 12.08C24 5.4 18.63 0 12 0z" />
             </svg>
           </a>
 
-          {/* YouTube */}
-          <a href="#" aria-label="YouTube">
+          {/* LinkedIn */}
+          <a
+            href="https://linkedin.com/in/your-profile"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="w-6 h-6 fill-current text-red-500 hover:text-white transition-colors duration-200"
+              className="w-6 h-6 fill-current text-blue-500 hover:text-white transition-colors duration-200"
               viewBox="0 0 24 24"
             >
-              <path d="M19.6 3.2c-1.7-.1-5.7-.2-7.6-.2s-5.9.1-7.6.2c-1.9.1-3.2 1.6-3.2 3.2v11.2c0 1.6 1.3 3.1 3.2 3.2 1.7.1 5.7.2 7.6.2s5.9-.1 7.6-.2c1.9-.1 3.2-1.6 3.2-3.2V6.4c0-1.6-1.3-3.1-3.2-3.2zM10 15.5v-7l6 3.5-6 3.5z" />
+              <path d="M20.447 20.452H17.21v-5.569c0-1.328-.026-3.037-1.849-3.037-1.851 0-2.134 1.445-2.134 2.94v5.666H9.01V9h3.1v1.561h.044c.431-.816 1.485-1.676 3.056-1.676 3.27 0 3.872 2.153 3.872 4.951v6.616zM5.337 7.433a1.8 1.8 0 1 1 0-3.599 1.8 1.8 0 0 1 0 3.6zm1.62 13.02H3.716V9h3.241v11.453zM22.225 0H1.771C.792 0 0 .774 0 1.728v20.543C0 23.226.792 24 1.771 24h20.451C23.2 24 24 23.226 24 22.271V1.728C24 .774 23.2 0 22.225 0z" />
             </svg>
           </a>
 
-          {/* Facebook */}
-          <a href="#" aria-label="Facebook">
+          {/* Instagram */}
+          <a
+            href="https://instagram.com/your-username"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="w-6 h-6 fill-current text-blue-600 hover:text-white transition-colors duration-200"
+              className="w-6 h-6 fill-current text-pink-500 hover:text-white transition-colors duration-200"
               viewBox="0 0 24 24"
-            > 
-            <path d="M22.675 0h-21.35C.595 0 0 .6 0 1.333v21.333C0 23.4.595 24 1.325 24H12.82v-9.294H9.692V11.29h3.128V8.413c0-3.1 1.894-4.788 4.659-4.788 1.325 0 2.462.098 2.794.143v3.24l-1.918.001c-1.504 0-1.796.715-1.796 1.763v2.31h3.587l-.467 3.416h-3.12V24h6.116c.73 0 1.324-.6 1.324-1.334V1.333C24 .6 23.405 0 22.675 0z" />
+            >
+              <path d="M7.75 2A5.76 5.76 0 002 7.75v8.5A5.76 5.76 0 007.75 22h8.5A5.76 5.76 0 0022 16.25v-8.5A5.76 5.76 0 0016.25 2h-8.5zM12 7.1a4.9 4.9 0 110 9.8 4.9 4.9 0 010-9.8zm0 1.8a3.1 3.1 0 100 6.2 3.1 3.1 0 000-6.2zM17.5 6a1.1 1.1 0 110 2.2 1.1 1.1 0 010-2.2zM20.2 7.75v8.5a3.95 3.95 0 01-3.95 3.95h-8.5A3.95 3.95 0 014.8 16.25v-8.5A3.95 3.95 0 017.75 3.8h8.5a3.95 3.95 0 013.95 3.95z" />
             </svg>
           </a>
         </div>
 
-        {/* Footer Note */}
+        {/* Footer */}
         <p className="text-sm text-gray-400">
           © {new Date().getFullYear()} All rights reserved —{" "}
-          <span className="text-indigo-400 font-semibold">Sumit Chaturvedi</span>
+          <span className="text-indigo-400 font-semibold">
+            Sumit Chaturvedi
+          </span>
         </p>
       </div>
     </footer>
