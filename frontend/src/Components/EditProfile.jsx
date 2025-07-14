@@ -9,12 +9,12 @@ const EditProfile = ({ user }) => {
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [gender, setGender] = useState(user.gender);
-  const [age, setAge] = useState(user.age);
-  const [height, setHeight] = useState(user.height);
+  const [age, setAge] = useState(user.age || "");
+  const [height, setHeight] = useState(user.height || "");
   const [photoUrl, setPhotoUrl] = useState(user.photoUrl);
-  const [skills, setSkills] = useState(user.skills);
-  const [languages, setLanguages] = useState(user.languages);
-  const [about, setAbout] = useState(user.about);
+  const [skills, setSkills] = useState(user.skills || "");
+  const [languages, setLanguages] = useState(user.languages || "");
+  const [about, setAbout] = useState(user.about || "");
   const dispatch = useDispatch();
   const [setToast, boolToast] = useState(false);
 
@@ -79,7 +79,7 @@ const EditProfile = ({ user }) => {
             value={gender}
             onChange={(e) => setGender(e.target.value)}
           >
-            <option disabled value="">
+            <option value="">
               Select Gender
             </option>
             <option value="male">Male</option>

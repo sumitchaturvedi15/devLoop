@@ -41,22 +41,20 @@ authRouter.post("/signUp",async(req,res)=>{
     try{
         const data=req.body;
         isValidated(data);
-        const {firstName, lastName, email, password, gender, age, height, languages, skills, photoUrl}=data;
+        const {firstName, lastName, email, password}=data;
         const passwordHash= await bcrypt.hash(password,10);
         const user= new User({
             firstName,
             lastName,
             email,
-            password:passwordHash,
-            gender,
-            age,
-            height,
-            languages,
-            skills,
-            photoUrl
+            password:passwordHash
         });
-        await user.save();
-        res.send("User Signed Up");
+        const updatedUser=await user.save();
+        const token=await jwt.sign({_id:updatedUser._id},"Keytoken");
+        res.cookie("token",token,{
+            expires:new Date(Date.now()+8*3600000)
+        });
+        res.json({message:"User Signed Up", data:updatedUser});
     }
     catch(err){
         res.status(400).send("Error In SignUp");

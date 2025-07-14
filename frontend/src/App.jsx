@@ -7,6 +7,7 @@ import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Profile from "./Components/Profile";
 import Connections from "./Components/Connections";
 import Requests from "./Components/Requests";
+import SignUp from "./Components/SignUp";
 function App() {
   return (
     <>
@@ -16,6 +17,7 @@ function App() {
             <Route path="/" element={<div><Body/></div>}>
               <Route path="/feed" element={<div><Feed/></div>} />
               <Route path="/login" element={<div><Login/></div>} />
+              <Route path="/signUp" element={<div><SignUp/></div>} />
               <Route path="/profile" element={<div><Profile/></div>} />
               <Route path="/connections" element={<div><Connections/></div>} />
               <Route path="/requests" element={<div><Requests/></div>} />
