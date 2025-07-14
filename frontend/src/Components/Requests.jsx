@@ -20,15 +20,18 @@ const Requests = () => {
     }
   };
 
-  const reviewRequest=async(status,_id)=>{
-    try{
-        await axios.post(BASE_URL+"/request/review/"+status+"/"+_id,{},{withCredentials:true})
-        dispatch(removeRequest(_id));
+  const reviewRequest = async (status, _id) => {
+    try {
+      await axios.post(
+        BASE_URL + "/request/review/" + status + "/" + _id,
+        {},
+        { withCredentials: true }
+      );
+      dispatch(removeRequest(_id));
+    } catch (err) {
+      console.log(err);
     }
-    catch(err){
-        console.log(err);
-    }
-  }
+  };
 
   useEffect(() => {
     fetchRequests();
@@ -39,9 +42,14 @@ const Requests = () => {
 
   if (request.length === 0)
     return (
-      <h1 className="text-3xl font-bold tracking-wide text-center mt-16 mb-4 text-cyan-100">
-        You have no requests.
-      </h1>
+      <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-[#001f3f] via-[#003f5c] to-[#001f3f] px-6 py-10 text-white">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-center mb-4 tracking-wider text-cyan-100 drop-shadow-lg">
+          You have no requests.
+        </h1>
+        <p className="text-lg md:text-xl text-cyan-200 text-center opacity-75">
+          Check back later — your connections might be on the way!
+        </p>
+      </div>
     );
 
   return (
@@ -105,11 +113,17 @@ const Requests = () => {
                 <p className="text-cyan-200">{about}</p>
                 <div className="flex flex-wrap justify-center gap-3 p-4 sm:justify-end sm:items-center">
                   <button className="btn w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white font-semibold flex items-center gap-2">
-                    <CheckCircle className="w-5 h-5" onClick={()=>reviewRequest("accepted",requests._id)}/>
+                    <CheckCircle
+                      className="w-5 h-5"
+                      onClick={() => reviewRequest("accepted", requests._id)}
+                    />
                     Accept
                   </button>
                   <button className="btn w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white font-semibold flex items-center gap-2">
-                    <XCircle className="w-5 h-5" onClick={()=>reviewRequest("rejected",requests._id)}/>
+                    <XCircle
+                      className="w-5 h-5"
+                      onClick={() => reviewRequest("rejected", requests._id)}
+                    />
                     Decline
                   </button>
                 </div>

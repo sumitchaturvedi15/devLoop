@@ -31,6 +31,13 @@ const MyCard = ({ user }) => {
               {age}, {gender.toUpperCase()}
             </p>
           )}
+          {Array.isArray(skills) && skills.length > 0 && (
+            <p className="text-sm mt-1">
+              <strong>Skills:</strong> {skills.map((s, i) => (
+                <span key={i}>{s.toUpperCase()}{i < skills.length - 1 ? ', ' : ''}</span>
+              ))}
+            </p>
+          )}
           {Array.isArray(languages) && languages.length > 0 && (
             <p className="text-sm">
               <strong>Languages:</strong> {languages.map((l, i) => (
@@ -39,13 +46,6 @@ const MyCard = ({ user }) => {
             </p>
           )}
           {about && <p className="text-sm mt-1">{about}</p>}
-          {Array.isArray(skills) && skills.length > 0 && (
-            <p className="text-sm mt-1">
-              <strong>Skills:</strong> {skills.map((s, i) => (
-                <span key={i}>{s.toUpperCase()}{i < skills.length - 1 ? ', ' : ''}</span>
-              ))}
-            </p>
-          )}
           {height && <p className="text-sm mt-1">Height: {height} cm</p>}
         </div>
       </div>
