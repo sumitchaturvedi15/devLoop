@@ -20,6 +20,7 @@ const Connections = () => {
   useEffect(() => {
     fetchConnections();
   }, []);
+
   if (!connections) return <div>Loading...</div>;
   if (connections.length === 0)
     return (
@@ -61,11 +62,11 @@ const Connections = () => {
         </label>
       </div>
 
-      {connections.map((connection, index) => {
-        const { firstName, lastName, photoUrl, age, gender, about } =
+      {connections.map((connection) => {
+        const { _id,firstName, lastName, photoUrl, age, gender, about } =
           connection;
         return (
-          <div key={index} className="flex justify-center animate-fade-in-up">
+          <div key={_id} className="flex justify-center animate-fade-in-up">
             <div className="card card-side bg-base hover:bg-base-200 shadow-xl rounded-xl w-full max-w-3xl my-4 transition-all duration-300 ease-in-out">
               <div className="avatar p-4">
                 <div className="w-24 h-24 rounded-full ring ring-fuchsia-500 ring-offset-base-100 ring-offset-2 shadow-md">

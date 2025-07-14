@@ -10,11 +10,8 @@ userRouter.get("/user/request/recieved", userAuth, async (req,res)=>{
         const data=await ConnectionRequest.find({
             toUser:user,
             status:"interested"
-        }).populate("fromUser",["firstName", "lastName"]);
-        res.json({
-            message:"User request: ",
-            data: data,
-        })
+        }).populate("fromUser",["firstName", "lastName", "age", "gender", "about", "skills","photoUrl"]);
+        res.json(data)
     }
     catch(err){
         res.send("Unable to fetch requests");
