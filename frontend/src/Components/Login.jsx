@@ -48,7 +48,7 @@ const Login = () => {
           />
           <legend className="fieldset-legend">Password</legend>
           <input
-            type="password"
+            type="text"
             value={password}
             className="input"
             placeholder="Type here"
