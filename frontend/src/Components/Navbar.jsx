@@ -48,24 +48,45 @@ const Navbar = () => {
                 <img alt="Tailwind CSS Navbar component" src={user.photoUrl} />
               </div>
             </div>
+
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+              className="menu menu-sm dropdown-content backdrop-blur-md bg-base-200/60 rounded-box z-10 mt-3 w-52 p-2 shadow"
             >
               <li>
-                <Link to={"/profile"} className="justify-between">
+                <Link
+                  to="/profile"
+                  className="justify-between"
+                  onClick={() => document.activeElement?.blur()}
+                >
                   Profile
-                  {/* <span className="badge">New</span> */}
                 </Link>
               </li>
               <li>
-                <Link to="/connections">Connections</Link>
+                <Link
+                  to="/connections"
+                  onClick={() => document.activeElement?.blur()}
+                >
+                  Connections
+                </Link>
               </li>
               <li>
-                <Link to="/requests">Requests</Link>
+                <Link
+                  to="/requests"
+                  onClick={() => document.activeElement?.blur()}
+                >
+                  Requests
+                </Link>
               </li>
               <li>
-                <a onClick={handleLogout}>Logout</a>
+                <a
+                  onClick={() => {
+                    document.activeElement?.blur();
+                    handleLogout();
+                  }}
+                >
+                  Logout
+                </a>
               </li>
             </ul>
           </div>
