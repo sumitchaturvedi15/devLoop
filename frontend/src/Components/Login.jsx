@@ -51,7 +51,7 @@ const Login = () => {
 
           <label className="label text-sm text-indigo-200 mt-4">Password</label>
           <input
-            type="password"
+            type="text"
             value={password}
             className="input input-bordered bg-black/30 text-white placeholder-gray-400 border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             placeholder="Enter your password"

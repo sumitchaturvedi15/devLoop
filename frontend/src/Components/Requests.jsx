@@ -1,20 +1,21 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { addRequest, removeRequest } from "../utils/requestSlice";
 import { CheckCircle, XCircle } from "lucide-react";
 
 const Requests = () => {
-  const request = useSelector((store) => store.request);
   const dispatch = useDispatch();
+  const request = useSelector((store) => store.request);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const fetchRequests = async () => {
     try {
       const res = await axios.get(BASE_URL + "/user/request/recieved", {
         withCredentials: true,
       });
-      dispatch(addRequest(res?.data));
+      dispatch(addRequest(res.data));
     } catch (err) {
       console.log(err);
     }
@@ -37,101 +38,98 @@ const Requests = () => {
     fetchRequests();
   }, []);
 
+  const filteredRequests = request?.filter((req) => {
+    const name = `${req.fromUser.firstName} ${req.fromUser.lastName}`.toLowerCase();
+    return name.includes(searchTerm.toLowerCase());
+  });
+
   if (!request)
-    return <div className="text-white text-center mt-20">Loading...</div>;
+    return (
+      <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-black via-gray-900 to-black text-white">
+        <p className="text-xl font-medium animate-pulse">Loading requests...</p>
+      </div>
+    );
 
   if (request.length === 0)
     return (
-      <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-[#001f3f] via-[#003f5c] to-[#001f3f] px-6 py-10 text-white">
-        <h1 className="text-4xl md:text-5xl font-extrabold text-center mb-4 tracking-wider text-cyan-100 drop-shadow-lg">
-          You have no requests.
+      <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-black via-gray-900 to-black text-white px-6 py-10">
+        <h1 className="text-4xl md:text-5xl font-bold text-center mb-4 text-indigo-100 tracking-tight">
+          No Requests Yet
         </h1>
-        <p className="text-lg md:text-xl text-cyan-200 text-center opacity-75">
-          Check back later — your connections might be on the way!
+        <p className="text-lg md:text-xl text-indigo-300 text-center">
+          You’ll see connection requests appear here.
         </p>
       </div>
     );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#001f3f] via-[#003f5c] to-[#001f3f] p-6 text-white">
-      <h1 className="text-4xl font-bold text-center mb-10 tracking-wider text-cyan-100">
+    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black px-4 py-10 text-white">
+      <h1 className="text-4xl font-bold text-center mb-10 text-indigo-200">
         Requests Received
       </h1>
 
-      <div className="flex justify-center mb-10">
-        <label className="input input-bordered bg-[#002b4f] border-cyan-400 flex items-center gap-2 w-full max-w-md shadow-lg rounded-lg px-4 py-2">
-          <svg
-            className="h-5 w-5 text-cyan-300"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-          >
-            <g
-              strokeLinejoin="round"
-              strokeLinecap="round"
-              strokeWidth="2.5"
-              fill="none"
-              stroke="currentColor"
-            >
-              <circle cx="11" cy="11" r="8"></circle>
-              <path d="m21 21-4.3-4.3"></path>
-            </g>
-          </svg>
-          <input
-            type="search"
-            required
-            placeholder="Search"
-            className="grow outline-none bg-transparent text-cyan-200 placeholder:text-cyan-400"
-          />
-        </label>
+      {/* Search Input */}
+      <div className="max-w-md mx-auto mb-8">
+        <input
+          type="text"
+          placeholder="Search by name..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-full px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-indigo-400 placeholder-gray-400 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+        />
       </div>
 
-      {request.map((requests) => {
-        const { _id, firstName, lastName, photoUrl, age, gender, about } =
-          requests.fromUser;
-        return (
-          <div
-            key={_id}
-            className="flex justify-center items-center animate-fade-in-up"
-          >
-            <div className="card card-side bg-[#012840]/60 backdrop-blur-md border border-cyan-600/30 shadow-2xl rounded-xl w-full max-w-3xl my-6 transition-all duration-300 ease-in-out hover:scale-[1.02]">
-              <div className="avatar p-5">
-                <div className="w-24 h-24 rounded-full ring ring-cyan-400 ring-offset-2 ring-offset-[#012840] shadow-md">
-                  <img src={photoUrl} alt={`${firstName}'s avatar`} />
-                </div>
-              </div>
-              <div className="card-body text-cyan-100">
-                <h2 className="card-title text-xl tracking-wide">
-                  {firstName + " " + lastName}
-                </h2>
-                {(gender || age) && (
-                  <p className="text-sm italic text-cyan-300">
-                    {gender && gender.toUpperCase()}
+      {/* Requests List */}
+      <div className="flex flex-col gap-6 items-center">
+        {filteredRequests.length === 0 ? (
+          <p className="text-gray-400 text-center">No matching users found.</p>
+        ) : (
+          filteredRequests.map((requests) => {
+            const { _id, firstName, lastName, photoUrl, age, gender, about } =
+              requests.fromUser;
+            return (
+              <div
+                key={_id}
+                className="w-full max-w-3xl bg-white/5 border border-white/10 shadow-lg rounded-xl p-5 flex flex-col sm:flex-row items-center sm:items-start gap-4 backdrop-blur-md hover:scale-[1.01] transition"
+              >
+                <img
+                  src={photoUrl}
+                  alt={firstName}
+                  className="w-24 h-24 rounded-full object-cover ring-2 ring-indigo-500"
+                />
+                <div className="flex-1 text-center sm:text-left">
+                  <h2 className="text-xl font-semibold text-indigo-300">
+                    {firstName} {lastName}
+                  </h2>
+                  <p className="text-sm text-gray-300 italic mb-1">
+                    {gender?.toUpperCase()}
                     {gender && age && ", "}
-                    {age && age}
+                    {age && `${age} years old`}
                   </p>
-                )}
-                <p className="text-cyan-200">{about}</p>
-                <div className="flex flex-wrap justify-center gap-3 p-4 sm:justify-end sm:items-center">
-                  <button
-                    onClick={() => reviewRequest("accepted", requests._id)}
-                    className="btn w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white font-semibold flex items-center gap-2"
-                  >
-                    <CheckCircle className="w-5 h-5" />
-                    Accept
-                  </button>
-                  <button
-                    onClick={() => reviewRequest("rejected", requests._id)}
-                    className="btn w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white font-semibold flex items-center gap-2"
-                  >
-                    <XCircle className="w-5 h-5" />
-                    Decline
-                  </button>
+                  <p className="text-sm text-gray-200 mb-4">{about}</p>
+
+                  <div className="flex flex-col sm:flex-row gap-3 justify-center sm:justify-start">
+                    <button
+                      onClick={() => reviewRequest("accepted", requests._id)}
+                      className="px-5 py-2 rounded-full bg-green-600 hover:bg-green-700 text-white font-semibold flex items-center justify-center gap-2"
+                    >
+                      <CheckCircle size={18} />
+                      Accept
+                    </button>
+                    <button
+                      onClick={() => reviewRequest("rejected", requests._id)}
+                      className="px-5 py-2 rounded-full bg-rose-600 hover:bg-rose-700 text-white font-semibold flex items-center justify-center gap-2"
+                    >
+                      <XCircle size={18} />
+                      Decline
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        );
-      })}
+            );
+          })
+        )}
+      </div>
     </div>
   );
 };
