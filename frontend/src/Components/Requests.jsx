@@ -112,18 +112,18 @@ const Requests = () => {
                 )}
                 <p className="text-cyan-200">{about}</p>
                 <div className="flex flex-wrap justify-center gap-3 p-4 sm:justify-end sm:items-center">
-                  <button className="btn w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white font-semibold flex items-center gap-2">
-                    <CheckCircle
-                      className="w-5 h-5"
-                      onClick={() => reviewRequest("accepted", requests._id)}
-                    />
+                  <button
+                    onClick={() => reviewRequest("accepted", requests._id)}
+                    className="btn w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white font-semibold flex items-center gap-2"
+                  >
+                    <CheckCircle className="w-5 h-5" />
                     Accept
                   </button>
-                  <button className="btn w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white font-semibold flex items-center gap-2">
-                    <XCircle
-                      className="w-5 h-5"
-                      onClick={() => reviewRequest("rejected", requests._id)}
-                    />
+                  <button
+                    onClick={() => reviewRequest("rejected", requests._id)}
+                    className="btn w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white font-semibold flex items-center gap-2"
+                  >
+                    <XCircle className="w-5 h-5" />
                     Decline
                   </button>
                 </div>
