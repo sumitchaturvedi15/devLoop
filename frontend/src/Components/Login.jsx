@@ -1,11 +1,9 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
-import { Link } from "react-router-dom";
 
 const Login = () => {
   const [emailId, setEmailId] = useState("shraddha@gmail.com");
@@ -13,6 +11,7 @@ const Login = () => {
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const handleLogin = async () => {
     try {
       const res = await axios.post(
@@ -34,41 +33,51 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center my-4">
-      <div className="card bg-base-200 w-96">
+    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white flex items-center justify-center px-4">
+      <div className="card bg-base-200 bg-opacity-10 backdrop-blur-md shadow-xl border border-indigo-500 w-full max-w-sm rounded-xl">
         <div className="card-body">
-          <h2 className="card-title justify-center">Login</h2>
-          <legend className="fieldset-legend ">Email</legend>
+          <h2 className="card-title justify-center text-indigo-300 text-2xl font-bold mb-4">
+            Login
+          </h2>
+
+          <label className="label text-sm text-indigo-200">Email</label>
           <input
-            type="text"
+            type="email"
             value={emailId}
-            className="input"
-            placeholder="Type here"
+            className="input input-bordered bg-black/30 text-white placeholder-gray-400 border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            placeholder="Enter your email"
             onChange={(e) => setEmailId(e.target.value)}
           />
-          <legend className="fieldset-legend">Password</legend>
+
+          <label className="label text-sm text-indigo-200 mt-4">Password</label>
           <input
-            type="text"
+            type="password"
             value={password}
-            className="input"
-            placeholder="Type here"
+            className="input input-bordered bg-black/30 text-white placeholder-gray-400 border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            placeholder="Enter your password"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <div role="alert" className="bg-base-200">
-            <span className="text-red-500">{error}</span>
-          </div>
-          <div className="card-actions justify-center my-2 ">
-            <button className="btn bg-base-100" onClick={handleLogin}>
+
+          {error && (
+            <div className="mt-3 text-red-400 text-sm text-center">{error}</div>
+          )}
+
+          <div className="card-actions justify-center mt-6">
+            <button
+              className="btn bg-gradient-to-r from-indigo-700 to-purple-600 text-white font-semibold hover:scale-105 transition-transform shadow-md"
+              onClick={handleLogin}
+            >
               Login
             </button>
           </div>
-          <div className="text-center mt-4 text-sm">
+
+          <div className="text-center mt-6 text-sm text-gray-300">
             New user?{" "}
             <Link
               to="/signUp"
-              className="text-blue-500 hover:underline font-medium p-2"
+              className="text-indigo-400 hover:underline font-medium"
             >
-              SignUp here
+              Sign up here
             </Link>
           </div>
         </div>
