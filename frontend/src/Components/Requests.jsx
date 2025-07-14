@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
-import { addRequest } from "../utils/requestSlice";
+import { addRequest, removeRequest } from "../utils/requestSlice";
 import { CheckCircle, XCircle } from "lucide-react";
 
 const Requests = () => {
@@ -19,6 +19,16 @@ const Requests = () => {
       console.log(err);
     }
   };
+
+  const reviewRequest=async(status,_id)=>{
+    try{
+        await axios.post(BASE_URL+"/request/review/"+status+"/"+_id,{},{withCredentials:true})
+        dispatch(removeRequest(_id));
+    }
+    catch(err){
+        console.log(err);
+    }
+  }
 
   useEffect(() => {
     fetchRequests();
@@ -71,7 +81,10 @@ const Requests = () => {
         const { _id, firstName, lastName, photoUrl, age, gender, about } =
           requests.fromUser;
         return (
-          <div key={_id} className="flex justify-center items-center animate-fade-in-up">
+          <div
+            key={_id}
+            className="flex justify-center items-center animate-fade-in-up"
+          >
             <div className="card card-side bg-[#012840]/60 backdrop-blur-md border border-cyan-600/30 shadow-2xl rounded-xl w-full max-w-3xl my-6 transition-all duration-300 ease-in-out hover:scale-[1.02]">
               <div className="avatar p-5">
                 <div className="w-24 h-24 rounded-full ring ring-cyan-400 ring-offset-2 ring-offset-[#012840] shadow-md">
@@ -92,11 +105,11 @@ const Requests = () => {
                 <p className="text-cyan-200">{about}</p>
                 <div className="flex flex-wrap justify-center gap-3 p-4 sm:justify-end sm:items-center">
                   <button className="btn w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white font-semibold flex items-center gap-2">
-                    <CheckCircle className="w-5 h-5" />
+                    <CheckCircle className="w-5 h-5" onClick={()=>reviewRequest("accepted",requests._id)}/>
                     Accept
                   </button>
                   <button className="btn w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white font-semibold flex items-center gap-2">
-                    <XCircle className="w-5 h-5" />
+                    <XCircle className="w-5 h-5" onClick={()=>reviewRequest("rejected",requests._id)}/>
                     Decline
                   </button>
                 </div>
