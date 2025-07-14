@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { addConnections } from "../utils/connectionSlice";
@@ -7,6 +7,10 @@ import { addConnections } from "../utils/connectionSlice";
 const Connections = () => {
   const dispatch = useDispatch();
   const connections = useSelector((store) => store.connections);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filtered, setFiltered] = useState([]);
+  const [visibleCount, setVisibleCount] = useState(4);
+
   const fetchConnections = async () => {
     try {
       const res = await axios.get(BASE_URL + "/user/connections", {
@@ -14,82 +18,117 @@ const Connections = () => {
       });
       dispatch(addConnections(res.data));
     } catch (err) {
-      console.log("Error while fetching connections" + err);
+      console.log("Error while fetching connections", err);
     }
   };
+
   useEffect(() => {
     fetchConnections();
   }, []);
 
-  if (!connections) return <div>Loading...</div>;
-  if (connections.length === 0)
+  useEffect(() => {
+    if (!connections) return;
+    const term = searchTerm.toLowerCase();
+    const result = connections.filter((conn) =>
+      `${conn.firstName} ${conn.lastName}`.toLowerCase().includes(term)
+    );
+    setFiltered(result);
+  }, [searchTerm, connections]);
+
+  const handleExpand = () => {
+    setVisibleCount((prev) => prev + 4);
+  };
+
+  const handleCollapse = () => {
+    setVisibleCount(4);
+  };
+
+  if (!connections)
     return (
-      <h1 className="text-3xl font-bold tracking-wide text-center mt-6 mb-4">
-        You have no connections.
-      </h1>
+      <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-black via-gray-900 to-black text-white">
+        <h1 className="text-xl font-medium animate-pulse">Loading...</h1>
+      </div>
     );
 
-  return (
-    <div className="min-h-screen bg-base p-4">
-      <h1 className="text-4xl font-bold text-center mb-6 tracking-wide">
-        Your Connections
-      </h1>
+  if (connections.length === 0)
+    return (
+      <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-black via-gray-900 to-black text-white">
+        <h1 className="text-3xl font-bold text-center">No Connections Yet</h1>
+      </div>
+    );
 
-      <div className="flex justify-center mb-6">
-        <label className="input input-bordered flex items-center gap-2 w-full max-w-md shadow-md rounded-md">
-          <svg
-            className="h-5 w-5 opacity-50"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-          >
-            <g
-              strokeLinejoin="round"
-              strokeLinecap="round"
-              strokeWidth="2.5"
-              fill="none"
-              stroke="currentColor"
-            >
-              <circle cx="11" cy="11" r="8"></circle>
-              <path d="m21 21-4.3-4.3"></path>
-            </g>
-          </svg>
-          <input
-            type="search"
-            required
-            placeholder="Search"
-            className="grow outline-none"
-          />
-        </label>
+  const visibleConnections = filtered.slice(0, visibleCount);
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white px-4 py-10">
+      <h1 className="text-4xl font-bold text-center mb-10">Your Connections</h1>
+
+      {/* Search Box */}
+      <div className="max-w-md mx-auto mb-8">
+        <input
+          type="text"
+          placeholder="Search connections..."
+          value={searchTerm}
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+            setVisibleCount(4); // Reset count on new search
+          }}
+          className="w-full px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-indigo-500 placeholder-gray-400 text-white focus:outline-none focus:ring-2 focus:ring-indigo-600 transition"
+        />
       </div>
 
-      {connections.map((connection) => {
-        const { _id,firstName, lastName, photoUrl, age, gender, about } =
-          connection;
-        return (
-          <div key={_id} className="flex justify-center animate-fade-in-up">
-            <div className="card card-side bg-base hover:bg-base-200 shadow-xl rounded-xl w-full max-w-3xl my-4 transition-all duration-300 ease-in-out">
-              <div className="avatar p-4">
-                <div className="w-24 h-24 rounded-full ring ring-fuchsia-500 ring-offset-base-100 ring-offset-2 shadow-md">
-                  <img src={photoUrl} alt={`${firstName}'s avatar`} />
-                </div>
-              </div>
-              <div className="card-body">
-                <h2 className="card-title ">
-                  {firstName + " " + lastName}
-                </h2>
-                {(gender || age) && (
-                  <p className="text-sm italic">
-                    {gender && gender.toUpperCase()}
-                    {gender && age && ", "}
-                    {age && age}
-                  </p>
-                )}
-                <p >{about}</p>
-              </div>
+      {/* Filtered + Visible Connections */}
+      <div className="flex flex-col gap-6 items-center">
+        {visibleConnections.map(({ _id, firstName, lastName, photoUrl, age, gender, about }) => (
+          <div
+            key={_id}
+            className="w-full max-w-3xl bg-white/5 border border-white/10 shadow-lg rounded-xl p-4 flex flex-col sm:flex-row items-center sm:items-start gap-4 backdrop-blur-md hover:scale-[1.01] transition"
+          >
+            <img
+              src={photoUrl}
+              alt={firstName}
+              className="w-24 h-24 rounded-full object-cover ring-2 ring-indigo-500"
+            />
+            <div className="flex-1 text-center sm:text-left">
+              <h2 className="text-xl font-semibold text-indigo-300">
+                {firstName} {lastName}
+              </h2>
+              <p className="text-sm text-gray-300 italic mb-1">
+                {gender?.toUpperCase()}
+                {gender && age && ", "}
+                {age && `${age} years old`}
+              </p>
+              <p className="text-sm text-gray-200">{about}</p>
             </div>
           </div>
-        );
-      })}
+        ))}
+
+        {/* No match */}
+        {filtered.length === 0 && (
+          <p className="text-gray-400 mt-6 text-center">No matching profiles found.</p>
+        )}
+      </div>
+
+      {/* Expand/Collapse Button */}
+      {filtered.length > 4 && (
+        <div className="flex justify-center mt-8">
+          {visibleCount < filtered.length ? (
+            <button
+              onClick={handleExpand}
+              className="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 rounded-full text-white font-semibold transition"
+            >
+              Show More ↓
+            </button>
+          ) : (
+            <button
+              onClick={handleCollapse}
+              className="px-6 py-2 bg-rose-600 hover:bg-rose-700 rounded-full text-white font-semibold transition"
+            >
+              Show Less ↑
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 };
