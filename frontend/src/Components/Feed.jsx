@@ -36,7 +36,7 @@ const Feed = () => {
 
   if (feed.length <= 0)
     return (
-      <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-purple-900 via-black to-purple-900 text-white text-center px-6">
+      <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-black via-gray-900 to-purple-900 text-white text-center px-6">
         <h1 className="text-3xl md:text-4xl font-bold mb-4">
           🎉 You're all caught up!
         </h1>
