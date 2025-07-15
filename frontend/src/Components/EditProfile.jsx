@@ -15,8 +15,8 @@ const EditProfile = ({ user }) => {
   const [skills, setSkills] = useState(user.skills || "");
   const [languages, setLanguages] = useState(user.languages || "");
   const [about, setAbout] = useState(user.about || "");
+  const [toast, setToast] = useState(false);
   const dispatch = useDispatch();
-  const [setToast, boolToast] = useState(false);
 
   const saveProfile = async () => {
     try {
@@ -29,26 +29,28 @@ const EditProfile = ({ user }) => {
           age: parseInt(age),
           height: parseInt(height),
           photoUrl,
-          skills: Array.isArray(skills) ? skills : skills.split(",").map((s) => s.trim()),
-          languages: Array.isArray(languages) ? languages : languages.split(",").map((l) => l.trim()),
+          skills: Array.isArray(skills)
+            ? skills
+            : skills.split(",").map((s) => s.trim()),
+          languages: Array.isArray(languages)
+            ? languages
+            : languages.split(",").map((l) => l.trim()),
           about,
         },
         { withCredentials: true }
       );
       dispatch(addUser(res?.data?.user));
-      boolToast(true);
-      setTimeout(() => {
-        boolToast(false);
-      }, 3000);
+      setToast(true);
+      setTimeout(() => setToast(false), 3000);
     } catch (err) {
       console.log(err);
     }
   };
 
   return (
-    <div className="flex flex-col lg:flex-row w-full min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white">
+    <div className="flex flex-col lg:flex-row w-full h-screen overflow-hidden bg-gradient-to-br from-black via-gray-900 to-black text-white">
       {/* Form Section */}
-      <div className="flex flex-col items-center p-8 gap-6 w-full lg:w-1/2 border-b lg:border-b-0 lg:border-r border-gray-800">
+      <div className="flex flex-col items-center p-6 sm:p-8 gap-6 w-full lg:w-3/5 border-b lg:border-b-0 lg:border-r border-gray-800 overflow-y-auto max-h-screen">
         <h2 className="text-3xl font-bold text-indigo-400 mb-2">Edit Profile</h2>
 
         <fieldset className="w-full max-w-md">
@@ -68,7 +70,7 @@ const EditProfile = ({ user }) => {
             type="text"
             value={lastName}
             className="w-full bg-gray-800 text-white rounded-md px-4 py-2 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-600"
-            placeholder="Type here"
+            placeholder="Last Name"
             onChange={(e) => setLastName(e.target.value)}
           />
         </fieldset>
@@ -93,7 +95,6 @@ const EditProfile = ({ user }) => {
             value={age}
             type="number"
             className="w-full bg-gray-800 text-white rounded-md px-4 py-2 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-600"
-            required
             placeholder="Age"
             min="18"
             max="150"
@@ -107,7 +108,6 @@ const EditProfile = ({ user }) => {
             value={height}
             type="number"
             className="w-full bg-gray-800 text-white rounded-md px-4 py-2 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-600"
-            required
             placeholder="Height"
             min="100"
             max="500"
@@ -168,7 +168,7 @@ const EditProfile = ({ user }) => {
           </button>
         </fieldset>
 
-        {setToast && (
+        {toast && (
           <div className="toast toast-top toast-start">
             <div className="alert alert-success shadow-lg bg-green-700 text-white">
               <span>Profile Updated Successfully.</span>
@@ -177,16 +177,20 @@ const EditProfile = ({ user }) => {
         )}
       </div>
 
-      {/* MyCard Preview Section */}
-      <div className="bg-black flex items-center justify-center w-full lg:w-1/2 p-8">
+      {/* Card Preview Section */}
+      <div className="bg-black flex items-center justify-center w-full lg:w-2/5 p-6 sm:p-8">
         <div className="w-full max-w-md bg-gray-900/60 rounded-xl p-6 shadow-lg border border-gray-700">
           <MyCard
             user={{
               firstName,
               lastName,
               photoUrl,
-              skills: Array.isArray(skills) ? skills : skills.split(",").map((s) => s.trim()),
-              languages: Array.isArray(languages) ? languages : languages.split(",").map((l) => l.trim()),
+              skills: Array.isArray(skills)
+                ? skills
+                : skills.split(",").map((s) => s.trim()),
+              languages: Array.isArray(languages)
+                ? languages
+                : languages.split(",").map((l) => l.trim()),
               about,
               gender,
               age,

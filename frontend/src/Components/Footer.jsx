@@ -21,7 +21,7 @@ const Footer = () => {
         <div className="flex gap-6 justify-center">
           {/* GitHub */}
           <a
-            href="https://github.com/your-username"
+            href="https://github.com/sumitchaturvedi15"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub"
@@ -37,7 +37,7 @@ const Footer = () => {
 
           {/* LinkedIn */}
           <a
-            href="https://linkedin.com/in/your-profile"
+            href="https://www.linkedin.com/in/sumitchaturvedi15/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn"
@@ -53,7 +53,7 @@ const Footer = () => {
 
           {/* Instagram */}
           <a
-            href="https://instagram.com/your-username"
+            href="https://instagram.com/sumitchaturvedii15"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Instagram"
