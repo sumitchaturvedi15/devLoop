@@ -14,14 +14,13 @@ const MyCard = ({ user }) => {
   return (
     user && (
       <div className="relative w-full h-full rounded-none overflow-hidden">
-        {/* Full image */}
+        
         <img
           src={photoUrl || "https://via.placeholder.com/400x400?text=No+Image"}
           alt="User"
           className="w-full h-full object-cover"
         />
 
-        {/* Text overlay at the bottom */}
         <div className="absolute bottom-0 w-full bg-gradient-to-t from-black/80 via-black/40 to-transparent text-white p-4">
           <h2 className="text-xl font-semibold">
             {firstName} {lastName}

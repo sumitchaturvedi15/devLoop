@@ -49,6 +49,7 @@ const EditProfile = ({ user }) => {
 
   return (
     <div className="flex flex-col lg:flex-row w-full h-screen overflow-hidden bg-gradient-to-br from-black via-gray-900 to-black text-white">
+
       {/* Form Section */}
       <div className="flex flex-col items-center p-6 sm:p-8 gap-6 w-full lg:w-3/5 border-b lg:border-b-0 lg:border-r border-gray-800 overflow-y-auto max-h-screen">
         <h2 className="text-3xl font-bold text-indigo-400 mb-2">Edit Profile</h2>
@@ -177,7 +178,7 @@ const EditProfile = ({ user }) => {
         )}
       </div>
 
-      {/* Card Preview Section */}
+      {/* My Card Section */}
       <div className="bg-black flex items-center justify-center w-full lg:w-2/5 p-6 sm:p-8">
         <div className="w-full max-w-md bg-gray-900/60 rounded-xl p-6 shadow-lg border border-gray-700">
           <MyCard

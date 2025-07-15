@@ -71,13 +71,12 @@ const Connections = () => {
           value={searchTerm}
           onChange={(e) => {
             setSearchTerm(e.target.value);
-            setVisibleCount(4); // Reset count on new search
+            setVisibleCount(4);
           }}
           className="w-full px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-indigo-500 placeholder-gray-400 text-white focus:outline-none focus:ring-2 focus:ring-indigo-600 transition"
         />
       </div>
 
-      {/* Filtered + Visible Connections */}
       <div className="flex flex-col gap-6 items-center">
         {visibleConnections.map(({ _id, firstName, lastName, photoUrl, age, gender, about }) => (
           <div
@@ -103,13 +102,11 @@ const Connections = () => {
           </div>
         ))}
 
-        {/* No match */}
         {filtered.length === 0 && (
           <p className="text-gray-400 mt-6 text-center">No matching profiles found.</p>
         )}
       </div>
 
-      {/* Expand/Collapse Button */}
       {filtered.length > 4 && (
         <div className="flex justify-center mt-8">
           {visibleCount < filtered.length ? (

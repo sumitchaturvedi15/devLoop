@@ -4,8 +4,8 @@ const Footer = () => {
   return (
     <footer className="bg-gradient-to-t from-gray-900 via-indigo-950 to-black text-gray-300 w-full px-4 sm:px-6 py-8">
       <div className="max-w-screen-xl mx-auto flex flex-col items-center gap-6 text-center">
-        {/* Navigation Links */}
-        <nav className="flex flex-wrap justify-center gap-4 sm:gap-6 text-sm sm:text-base font-medium">
+        
+        {/* <nav className="flex flex-wrap justify-center gap-4 sm:gap-6 text-sm sm:text-base font-medium">
           {["About Us", "Contact", "Jobs", "Press Kit"].map((item, idx) => (
             <a
               key={idx}
@@ -15,7 +15,7 @@ const Footer = () => {
               {item}
             </a>
           ))}
-        </nav>
+        </nav> */}
 
         {/* Social Icons */}
         <div className="flex gap-6 justify-center">

@@ -68,7 +68,6 @@ const Requests = () => {
         Requests Received
       </h1>
 
-      {/* Search Input */}
       <div className="max-w-md mx-auto mb-8">
         <input
           type="text"
