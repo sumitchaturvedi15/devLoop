@@ -7,7 +7,7 @@ const userAuth=async(req,res,next)=>{
         if(!token){
             return res.status(401).send("No token");
         }
-        const decode=await jwt.verify(token,"Keytoken");
+        const decode=await jwt.verify(token,process.env.SECRET_KEY);
         const {_id}=decode;
         const user=await User.findById(_id);
         if(!user){

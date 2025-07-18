@@ -23,7 +23,7 @@ authRouter.post("/login",async(req,res)=>{
         }
         const isPasswordValid=await bcrypt.compare(password,user.password);
         if(isPasswordValid){
-            const token=await jwt.sign({_id:user._id},"Keytoken");
+            const token=await jwt.sign({_id:user._id},process.env.SECRET_KEY);
             res.cookie("token",token);
             res.send(user);
         }

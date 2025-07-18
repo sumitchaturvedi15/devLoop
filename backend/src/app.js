@@ -4,6 +4,8 @@ app.use(express.json());
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 const cors=require("cors");
+require('dotenv').config()
+
 app.use(cors({
     origin: "http://localhost:5173",
     credentials: true
@@ -28,7 +30,7 @@ connectDB().then(()=>{
     // app.use((req,res)=>{
     //     res.send("Checking Database & server connection");
     // })
-    app.listen(5000, ()=>{
+    app.listen(process.env.PORT, ()=>{
         console.log("Connected with server successfully");
     });
 })
