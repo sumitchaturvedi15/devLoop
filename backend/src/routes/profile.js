@@ -14,6 +14,16 @@ profileRouter.get("/profile",userAuth,async(req,res)=>{
     }
 })
 
+profileRouter.get("/profile/:userId",async(req,res)=>{
+    try{
+        const user=await User.findById(req.params.userId);
+        res.send(user);
+    }
+    catch(err){
+        res.status(400).send("Error In Fetching Profile");
+    }
+})
+
 profileRouter.delete("/profile/delete",userAuth,async(req,res)=>{
     try{
         const user=req.user;

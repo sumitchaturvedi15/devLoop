@@ -5,6 +5,9 @@ const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 const cors=require("cors");
 require('dotenv').config()
+const http = require("http");
+const server = http.createServer(app);
+const initializeSocket = require("./utils/socket");
 
 app.use(cors({
     origin: "http://localhost:5173",
@@ -22,15 +25,21 @@ app.use("/",profileRouter);
 const requestRouter=require("./routes/request");
 app.use("/",requestRouter);
 
+const chatRouter=require("./routes/chat");
+app.use("/",chatRouter);
+
 const userRouter=require("./routes/user");
+
 app.use("/",userRouter);
+initializeSocket(server);
+
 
 connectDB().then(()=>{
     console.log("Successfully connected with the database");
     // app.use((req,res)=>{
     //     res.send("Checking Database & server connection");
     // })
-    app.listen(process.env.PORT, ()=>{
+    server.listen(process.env.PORT, ()=>{
         console.log("Connected with server successfully");
     });
 })

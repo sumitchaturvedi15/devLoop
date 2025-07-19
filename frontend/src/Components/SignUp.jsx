@@ -31,71 +31,67 @@ const SignUp = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white flex items-center justify-center px-4">
-      <div className="card bg-base-200 bg-opacity-10 backdrop-blur-md shadow-xl border border-indigo-500 w-full max-w-sm rounded-xl">
-        <div className="card-body">
-          <h2 className="card-title justify-center text-indigo-300 text-2xl font-bold mb-4">
-            Sign Up
-          </h2>
+    <div className="min-h-screen bg-gradient-to-br from-pink-200 to-blue-200 text-gray-800 flex items-center justify-center px-4">
+      <div className="w-full max-w-sm bg-white/60 backdrop-blur-md rounded-xl p-8 shadow-xl border border-pink-300">
+        <h2 className="text-3xl font-bold text-pink-700 text-center mb-6">
+          Sign Up
+        </h2>
 
-          <label className="label text-sm text-indigo-200">First Name</label>
-          <input
-            type="text"
-            value={firstName}
-            className="input input-bordered bg-black/30 text-white placeholder-gray-400 border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            placeholder="Enter your first name"
-            onChange={(e) => setFirstName(e.target.value)}
-          />
+        <label className="block text-sm text-pink-600 mb-1">First Name</label>
+        <input
+          type="text"
+          value={firstName}
+          className="w-full bg-white text-gray-800 rounded-md px-4 py-2 border border-pink-300 focus:outline-none focus:ring-2 focus:ring-pink-400 mb-4"
+          placeholder="Enter your first name"
+          onChange={(e) => setFirstName(e.target.value)}
+        />
 
-          <label className="label text-sm text-indigo-200 mt-4">Last Name</label>
-          <input
-            type="text"
-            value={lastName}
-            className="input input-bordered bg-black/30 text-white placeholder-gray-400 border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            placeholder="Enter your last name"
-            onChange={(e) => setLastName(e.target.value)}
-          />
+        <label className="block text-sm text-pink-600 mb-1">Last Name</label>
+        <input
+          type="text"
+          value={lastName}
+          className="w-full bg-white text-gray-800 rounded-md px-4 py-2 border border-pink-300 focus:outline-none focus:ring-2 focus:ring-pink-400 mb-4"
+          placeholder="Enter your last name"
+          onChange={(e) => setLastName(e.target.value)}
+        />
 
-          <label className="label text-sm text-indigo-200 mt-4">Email</label>
-          <input
-            type="email"
-            value={email}
-            className="input input-bordered bg-black/30 text-white placeholder-gray-400 border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            placeholder="Enter your email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
+        <label className="block text-sm text-pink-600 mb-1">Email</label>
+        <input
+          type="email"
+          value={email}
+          className="w-full bg-white text-gray-800 rounded-md px-4 py-2 border border-pink-300 focus:outline-none focus:ring-2 focus:ring-pink-400 mb-4"
+          placeholder="Enter your email"
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-          <label className="label text-sm text-indigo-200 mt-4">Password</label>
-          <input
-            type="text"
-            value={password}
-            className="input input-bordered bg-black/30 text-white placeholder-gray-400 border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            placeholder="Create a password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
+        <label className="block text-sm text-pink-600 mb-1">Password</label>
+        <input
+          type="password"
+          value={password}
+          className="w-full bg-white text-gray-800 rounded-md px-4 py-2 border border-pink-300 focus:outline-none focus:ring-2 focus:ring-pink-400 mb-4"
+          placeholder="Create a password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-          {error && (
-            <div className="mt-3 text-red-400 text-sm text-center">{error}</div>
-          )}
+        {error && (
+          <div className="text-red-500 text-sm text-center mb-4">{error}</div>
+        )}
 
-          <div className="card-actions justify-center mt-6">
-            <button
-              className="btn bg-gradient-to-r from-indigo-700 to-purple-600 text-white font-semibold hover:scale-105 transition-transform shadow-md"
-              onClick={handleSignUp}
-            >
-              Sign Up
-            </button>
-          </div>
+        <button
+          className="w-full bg-gradient-to-r from-pink-400 to-blue-400 hover:from-pink-500 hover:to-blue-500 transition text-white font-semibold py-2 rounded-md shadow-md"
+          onClick={handleSignUp}
+        >
+          Sign Up
+        </button>
 
-          <div className="text-center mt-6 text-sm text-gray-300">
-            Already a user?{" "}
-            <Link
-              to="/login"
-              className="text-indigo-400 hover:underline font-medium"
-            >
-              Login here
-            </Link>
-          </div>
+        <div className="text-center mt-6 text-sm text-gray-700">
+          Already a user?{" "}
+          <Link
+            to="/login"
+            className="text-blue-600 hover:underline font-medium"
+          >
+            Login here
+          </Link>
         </div>
       </div>
     </div>

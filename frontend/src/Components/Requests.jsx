@@ -39,32 +39,28 @@ const Requests = () => {
   }, []);
 
   const filteredRequests = request?.filter((req) => {
-    const name = `${req.fromUser.firstName} ${req.fromUser.lastName}`.toLowerCase();
+    const name =
+      `${req.fromUser.firstName} ${req.fromUser.lastName}`.toLowerCase();
     return name.includes(searchTerm.toLowerCase());
   });
 
   if (!request)
     return (
-      <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-black via-gray-900 to-black text-white">
-        <p className="text-xl font-medium animate-pulse">Loading requests...</p>
+      <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-pink-200 via-purple-200 to-blue-200 text-gray-900">
+        <h1 className="text-xl font-medium animate-pulse">Loading requests...</h1>
       </div>
     );
 
   if (request.length === 0)
     return (
-      <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-black via-gray-900 to-black text-white px-6 py-10">
-        <h1 className="text-4xl md:text-5xl font-bold text-center mb-4 text-indigo-100 tracking-tight">
-          No Requests Yet
-        </h1>
-        <p className="text-lg md:text-xl text-indigo-300 text-center">
-          You’ll see connection requests appear here.
-        </p>
+      <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-pink-200 via-purple-200 to-blue-200 text-gray-900">
+        <h1 className="text-3xl font-bold text-center">No Requests Yet</h1>
       </div>
     );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black px-4 py-10 text-white">
-      <h1 className="text-4xl font-bold text-center mb-10 text-indigo-200">
+    <div className="min-h-screen bg-gradient-to-br from-pink-200 via-purple-200 to-blue-200 text-gray-900 px-4 py-10">
+      <h1 className="text-4xl font-bold text-center mb-10 drop-shadow-lg">
         Requests Received
       </h1>
 
@@ -74,57 +70,58 @@ const Requests = () => {
           placeholder="Search by name..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-indigo-400 placeholder-gray-400 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+          className="w-full px-4 py-2 rounded-full bg-white/30 backdrop-blur-sm border border-pink-400 placeholder-gray-700 text-gray-900 focus:outline-none focus:ring-2 focus:ring-pink-500 transition"
         />
       </div>
 
-      {/* Requests List */}
       <div className="flex flex-col gap-6 items-center">
         {filteredRequests.length === 0 ? (
-          <p className="text-gray-400 text-center">No matching users found.</p>
+          <p className="text-gray-600 mt-6 text-center">No matching users found.</p>
         ) : (
           filteredRequests.map((requests) => {
             const { _id, firstName, lastName, photoUrl, age, gender, about } =
               requests.fromUser;
+
             return (
-              <div
+              <fieldset
                 key={_id}
-                className="w-full max-w-3xl bg-white/5 border border-white/10 shadow-lg rounded-xl p-5 flex flex-col sm:flex-row items-center sm:items-start gap-4 backdrop-blur-md hover:scale-[1.01] transition"
+                className="w-full max-w-3xl bg-white/40 border border-white/30 shadow-xl rounded-2xl p-6 flex flex-col sm:flex-row items-center sm:items-start gap-6 backdrop-blur-md hover:scale-[1.01] transition"
               >
+                <legend className="sr-only">{firstName} {lastName}</legend>
                 <img
                   src={photoUrl}
                   alt={firstName}
-                  className="w-24 h-24 rounded-full object-cover ring-2 ring-indigo-500"
+                  className="w-24 h-24 rounded-full object-cover ring-4 ring-pink-400 shadow-md"
                 />
                 <div className="flex-1 text-center sm:text-left">
-                  <h2 className="text-xl font-semibold text-indigo-300">
+                  <h2 className="text-2xl font-bold text-pink-600">
                     {firstName} {lastName}
                   </h2>
-                  <p className="text-sm text-gray-300 italic mb-1">
+                  <p className="text-sm text-gray-700 italic mb-1">
                     {gender?.toUpperCase()}
                     {gender && age && ", "}
                     {age && `${age} years old`}
                   </p>
-                  <p className="text-sm text-gray-200 mb-4">{about}</p>
+                  <p className="text-sm text-gray-800 mb-4">{about}</p>
 
                   <div className="flex flex-col sm:flex-row gap-3 justify-center sm:justify-start">
                     <button
                       onClick={() => reviewRequest("accepted", requests._id)}
-                      className="px-5 py-2 rounded-full bg-green-600 hover:bg-green-700 text-white font-semibold flex items-center justify-center gap-2"
+                      className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg shadow-md transition flex items-center gap-2"
                     >
                       <CheckCircle size={18} />
                       Accept
                     </button>
                     <button
                       onClick={() => reviewRequest("rejected", requests._id)}
-                      className="px-5 py-2 rounded-full bg-rose-600 hover:bg-rose-700 text-white font-semibold flex items-center justify-center gap-2"
+                      className="px-4 py-2 bg-rose-500 hover:bg-rose-600 text-white font-semibold rounded-lg shadow-md transition flex items-center gap-2"
                     >
                       <XCircle size={18} />
                       Decline
                     </button>
                   </div>
                 </div>
-              </div>
+              </fieldset>
             );
           })
         )}
