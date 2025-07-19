@@ -24,17 +24,36 @@ profileRouter.get("/profile/:userId",async(req,res)=>{
     }
 })
 
-profileRouter.delete("/profile/delete",userAuth,async(req,res)=>{
-    try{
-        const user=req.user;
-        const id=user._id;
-        await User.findByIdAndDelete(id);
-        res.send("User Deleted Successfully");
+profileRouter.delete("/profile/delete", userAuth, async (req, res) => {
+  try {
+    const { password } = req.body;
+
+    if (!password) {
+      return res.status(400).send("Password is required");
     }
-    catch{
-        res.status(400).send("User Deletion Failed");
+
+    const isValid = await bcrypt.compare(password, req.user.password);
+    if (!isValid) {
+      return res.status(400).send("Incorrect password");
     }
-})
+
+    const userId = req.user._id;
+    await ConnectionRequest.deleteMany({
+        $or: [{ fromUser: userId }, { toUser: userId }]
+    });
+
+    await Chat.deleteMany({
+        participants: userId
+    });
+    await User.findByIdAndDelete(userId);
+
+    res.send("User deleted successfully");
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    res.status(500).send("User deletion failed. Please try again later.");
+  }
+});
+
 
 profileRouter.patch("/profile/edit",userAuth,async(req,res)=>{
     try{

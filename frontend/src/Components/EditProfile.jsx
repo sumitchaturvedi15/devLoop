@@ -4,6 +4,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import MyCard from "./MyCard";
+import { Link } from "react-router-dom";
 
 const EditProfile = ({ user }) => {
   const [firstName, setFirstName] = useState(user.firstName);
@@ -103,7 +104,9 @@ const EditProfile = ({ user }) => {
         </fieldset>
 
         <fieldset className="w-full max-w-md">
-          <legend className="text-sm text-pink-600 mb-1">Profile Picture URL:</legend>
+          <legend className="text-sm text-pink-600 mb-1">
+            Profile Picture URL:
+          </legend>
           <input
             value={photoUrl}
             type="url"
@@ -114,7 +117,9 @@ const EditProfile = ({ user }) => {
         </fieldset>
 
         <fieldset className="w-full max-w-md">
-          <legend className="text-sm text-pink-600 mb-1">Skills (comma separated):</legend>
+          <legend className="text-sm text-pink-600 mb-1">
+            Skills (comma separated):
+          </legend>
           <input
             value={Array.isArray(skills) ? skills.join(", ") : skills}
             type="text"
@@ -169,10 +174,24 @@ const EditProfile = ({ user }) => {
           </button>
         </fieldset>
 
+        <fieldset className="w-full max-w-md mt-2">
+          <Link to={"/delete/profile"}>
+          <button
+            className="w-full bg-gradient-to-r from-red-500 to-pink-500 
+             hover:from-red-600 hover:to-pink-600 
+             active:scale-95 transition-all duration-300 ease-in-out 
+             text-white font-bold py-2 rounded-lg shadow-lg 
+             tracking-wide ring-2 ring-transparent hover:ring-white"
+          >
+            Delete Profile
+          </button>
+          </Link>
+        </fieldset>
+
         {toast && (
-          <div className="toast toast-top toast-start">
-            <div className="alert alert-success shadow-lg bg-green-600 text-white">
-              <span>Profile Updated Successfully.</span>
+          <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50">
+            <div className="bg-green-600 text-white px-4 py-2 rounded shadow-lg animate-slide-in">
+              Profile Updated Successfully.
             </div>
           </div>
         )}
@@ -180,23 +199,23 @@ const EditProfile = ({ user }) => {
 
       {/* My Card Section */}
       <div className="flex items-center justify-center w-full lg:w-2/5 p-6 sm:p-8 bg-gradient-to-br from-pink-100/40 to-blue-100/40">
-          <MyCard
-            user={{
-              firstName,
-              lastName,
-              photoUrl,
-              skills: Array.isArray(skills)
-                ? skills
-                : skills.split(",").map((s) => s.trim()),
-              languages: Array.isArray(languages)
-                ? languages
-                : languages.split(",").map((l) => l.trim()),
-              about,
-              gender,
-              age,
-              height,
-            }}
-          />
+        <MyCard
+          user={{
+            firstName,
+            lastName,
+            photoUrl,
+            skills: Array.isArray(skills)
+              ? skills
+              : skills.split(",").map((s) => s.trim()),
+            languages: Array.isArray(languages)
+              ? languages
+              : languages.split(",").map((l) => l.trim()),
+            about,
+            gender,
+            age,
+            height,
+          }}
+        />
       </div>
     </div>
   );

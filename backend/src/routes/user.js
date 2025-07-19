@@ -18,28 +18,39 @@ userRouter.get("/user/request/recieved", userAuth, async (req,res)=>{
     }
 });
 
-userRouter.get("/user/connections", userAuth, async (req,res)=>{
-    try{
-        const user=req.user;
-        const data=await ConnectionRequest.find({
-            $or:[
-                {fromUser:user._id, status:"accepted"}, 
-                {toUser:user._id, status:"accepted"}
-            ]
-        }).populate("fromUser",["firstName","lastName","photoUrl","skills","languages","about","gender","age","height"])
-        .populate("toUser",["firstName","lastName","photoUrl","skills","languages","about","gender","age","height"]);
-        const connectionData=data.map((row)=>{
-            if(row.fromUser._id.toString() === user._id.toString()){
-                return row.toUser;
-            }
-            return row.fromUser;
-        });
-        res.json(connectionData);
-    }
-    catch(err){
-        res.send("Unable to fetch connections");
-    }
-})
+userRouter.get("/user/connections", userAuth, async (req, res) => {
+  try {
+    const user = req.user;
+    const data = await ConnectionRequest.find({
+      $or: [
+        { fromUser: user._id, status: "accepted" },
+        { toUser: user._id, status: "accepted" }
+      ]
+    })
+      .populate("fromUser", [
+        "firstName", "lastName", "photoUrl", "skills", "languages", "about", "gender", "age", "height"
+      ])
+      .populate("toUser", [
+        "firstName", "lastName", "photoUrl", "skills", "languages", "about", "gender", "age", "height"
+      ]);
+
+    // Filter out records where populated user is null (i.e., user was deleted)
+    const connectionData = data
+      .filter(row => row.fromUser && row.toUser)
+      .map(row => {
+        if (row.fromUser._id.toString() === user._id.toString()) {
+          return row.toUser;
+        }
+        return row.fromUser;
+      });
+
+    res.json(connectionData);
+  } catch (err) {
+    console.error("Error fetching connections:", err);
+    res.status(500).send("Unable to fetch connections");
+  }
+});
+
 
 userRouter.get("/feed", userAuth, async (req,res)=>{
     try{

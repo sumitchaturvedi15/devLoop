@@ -66,7 +66,7 @@ const SignUp = () => {
 
         <label className="block text-sm text-pink-600 mb-1">Password</label>
         <input
-          type="password"
+          type="text"
           value={password}
           className="w-full bg-white text-gray-800 rounded-md px-4 py-2 border border-pink-300 focus:outline-none focus:ring-2 focus:ring-pink-400 mb-4"
           placeholder="Create a password"

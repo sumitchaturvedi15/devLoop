@@ -10,6 +10,7 @@ import Requests from "./Components/Requests";
 import SignUp from "./Components/SignUp";
 import Chat from "./Components/Chat";
 import TargetChat from "./Components/TargetChat";
+import Delete  from "./Components/Delete";
 function App() {
   return (
     <>
@@ -25,6 +26,7 @@ function App() {
               <Route path="/profile" element={<div><Profile/></div>} />
               <Route path="/connections" element={<div><Connections/></div>} />
               <Route path="/requests" element={<div><Requests/></div>} />
+              <Route path="/delete/profile" element={<div><Delete/></div>} />
             </Route>
           </Routes>
         </BrowserRouter>
