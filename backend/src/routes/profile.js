@@ -3,6 +3,8 @@ const userAuth = require("../utils/userAuth");
 const User=require("../models/mongoose");
 const profileRouter=express.Router();
 const bcrypt=require("bcrypt");
+const ConnectionRequest = require("../models/connectionRequest");
+const Chat = require("../models/chat");
 
 profileRouter.get("/profile",userAuth,async(req,res)=>{
     try{
