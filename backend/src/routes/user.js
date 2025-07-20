@@ -73,7 +73,7 @@ userRouter.get("/feed", userAuth, async (req,res)=>{
                 {_id: {$nin: Array.from(uniqueConnection)} },
                 {_id: {$ne: user._id}}
             ]
-        }).select("firstName lastName photoUrl age gender skills languages height").skip(skip).limit(10);
+        }).select("firstName lastName photoUrl age gender skills languages height location university school company internships fullTimeJobs projects github experience").skip(skip).limit(10);
         res.send(users);
     }
     catch(err){

@@ -57,7 +57,42 @@ const userSchema= new mongoose.Schema({
     },
     languages:{
         type:[String]
-    }
+    },
+    university:{
+        type:String,
+        default:""
+    },
+    school:{
+        type:String,
+        default:""
+    },
+    company:{
+        type:String,
+        default:""
+    },
+    location:{
+        type:String,
+        default:""
+    },
+    internships:{
+        type:[String],
+        default:[]
+    },
+    fullTimeJobs:{
+        type:[String],
+        default:[]
+    },
+    projects:{
+        type:[String],
+        default:[]
+    },
+    github:{
+        type:String,
+        default:""
+    },
+    experience:{
+        type:Number,
+        default:0}
 },
 {
     timestamps:true

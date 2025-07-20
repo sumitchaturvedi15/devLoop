@@ -39,7 +39,7 @@ const TargetChat = () => {
 
       setMessages(chatMessages);
     } catch (err) {
-      console.error("Error fetching chat:", err);
+      // console.error("Error fetching chat:", err);
     }
   };
 

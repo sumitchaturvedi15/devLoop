@@ -51,7 +51,7 @@ profileRouter.delete("/profile/delete", userAuth, async (req, res) => {
 
     res.send("User deleted successfully");
   } catch (error) {
-    console.error("Error deleting user:", error);
+    // console.error("Error deleting user:", error);
     res.status(500).send("User deletion failed. Please try again later.");
   }
 });
@@ -62,18 +62,23 @@ profileRouter.patch("/profile/edit",userAuth,async(req,res)=>{
         const user=req.user;
         const _id=user._id;
         const data=req.body;
-        const allowedData=["firstName","lastName","photoUrl","skills","languages","about","gender","age","height"]
+        const allowedData=["firstName","lastName","photoUrl","skills","languages","about","gender","age","height","location","university","school","company","internships","fullTimeJobs","projects","github","experience"];
         const userAllowed=Object.keys(data).every((key)=>allowedData.includes(key));
         if(!userAllowed){
             return res.send("Failed to update fields")
         }
-        const {firstName,lastName,photoUrl,skills,languages,about,gender,age,height}=data;
+        const {
+            firstName, lastName, photoUrl, skills, languages, about, gender,
+            age, height, location, university, school, company,
+            internships, fullTimeJobs, projects, github, experience
+        } = data;
+
         if(firstName){if(firstName.length<4 || firstName.length>20){
-            console.log(req.body.firstName);
+            // console.log(req.body.firstName);
             return res.send("Name is not valid");
         }}
         if(lastName){if(lastName.length<4 || lastName.length>20){
-            console.log(req.body.lastName);
+            // console.log(req.body.lastName);
             return res.send("Name is not valid");
         }}
         const validGender=["male","female","other"];
@@ -91,8 +96,13 @@ profileRouter.patch("/profile/edit",userAuth,async(req,res)=>{
         if(height<100 || height>400){
             return res.send("Enter valid height");
         }
+        if (typeof skills === "string") data.skills = skills.split(",").map(s => s.trim());
+        if (typeof languages === "string") data.languages = languages.split(",").map(l => l.trim());
+        if (typeof internships === "string") data.internships = internships.split(",").map(i => i.trim());
+        if (typeof fullTimeJobs === "string") data.fullTimeJobs = fullTimeJobs.split(",").map(j => j.trim());
+        if (typeof projects === "string") data.projects = projects.split(",").map(p => p.trim()).slice(0, 3);
         await User.findByIdAndUpdate(_id,{
-            firstName,lastName,photoUrl,skills,languages,about,gender,age,height
+            firstName,lastName,photoUrl,skills,languages,about,gender,age,height,location,university,school,company,internships,fullTimeJobs,projects,github,experience
         },
         {runValidators:true});
         const updatedData=await User.findById(_id);
@@ -103,6 +113,8 @@ profileRouter.patch("/profile/edit",userAuth,async(req,res)=>{
         res.status(400).send("Error");
     }
 })
+
+
 
 profileRouter.patch("/profile/edit/password", userAuth,async(req,res)=>{
     try{

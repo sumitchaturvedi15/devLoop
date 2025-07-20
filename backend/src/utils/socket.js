@@ -18,12 +18,12 @@ const initializeSocket = (server) => {
   });
 
   io.on("connection", (socket) => {
-    console.log("New client connected:", socket.id);
+    // console.log("New client connected:", socket.id);
 
     socket.on("joinChat", ({ userId, targetUser }) => {
       const roomId = hashRoomId(userId, targetUser);
       socket.join(roomId);
-      console.log(`${userId} joined room: ${roomId}`);
+      // console.log(`${userId} joined room: ${roomId}`);
     });
 
     socket.on("sendMessage", async ({ userId, targetUser, newMessage }) => {
@@ -34,13 +34,13 @@ const initializeSocket = (server) => {
             ]
         })
         if(!validConnection) {
-            console.error("Connection not valid for message sending");
+            // console.error("Connection not valid for message sending");
             return;
             }
         const { text, timestamp } = newMessage;
         const roomId = hashRoomId(userId, targetUser);
 
-        console.log(`Message received from ${userId} to ${targetUser}:`, newMessage);
+        // console.log(`Message received from ${userId} to ${targetUser}:`, newMessage);
 
         let chat = await Chat.findOne({
           participants: { $all: [userId, targetUser] },
@@ -61,14 +61,14 @@ const initializeSocket = (server) => {
         await chat.save();
 
         io.to(roomId).emit("receivedMessage", { newMessage });
-        console.log(`Message emitted to room ${roomId}`);
+        // console.log(`Message emitted to room ${roomId}`);
       } catch (err) {
-        console.error("Error in sendMessage:", err);
+        // console.error("Error in sendMessage:", err);
       }
     });
 
     socket.on("disconnect", () => {
-      console.log("Client disconnected:", socket.id);
+      // console.log("Client disconnected:", socket.id);
     });
   });
 };

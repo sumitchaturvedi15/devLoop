@@ -26,14 +26,14 @@ const Delete = () => {
       } else {
         alert("Something went wrong. Please try again.");
       }
-      console.error("Error deleting account:", error);
+      // console.error("Error deleting account:", error);
     }
   };
 
   const handleDelete = () => {
     if (confirmChecked && password) {
       deleteAccount(password);
-      console.log("Deleting account...");
+      // console.log("Deleting account...");
     }
   };
 

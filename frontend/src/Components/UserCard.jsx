@@ -27,7 +27,7 @@ const UserCard = ({ user }) => {
       );
       dispatch(removeFeed(_id));
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 

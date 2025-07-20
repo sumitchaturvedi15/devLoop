@@ -17,7 +17,7 @@ const Requests = () => {
       });
       dispatch(addRequest(res.data));
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 
@@ -30,7 +30,7 @@ const Requests = () => {
       );
       dispatch(removeRequest(_id));
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 

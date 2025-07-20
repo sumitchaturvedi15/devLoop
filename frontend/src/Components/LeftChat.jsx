@@ -14,7 +14,7 @@ const LeftChat = ({ onSelect, selectedConnection }) => {
         });
         setConnections(res.data);
       } catch (error) {
-        console.error("Error fetching connections:", error);
+        // console.error("Error fetching connections:", error);
       }
     };
 

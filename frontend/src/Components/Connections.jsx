@@ -19,7 +19,7 @@ const Connections = () => {
       });
       dispatch(addConnections(res.data));
     } catch (err) {
-      console.log("Error while fetching connections", err);
+      // console.log("Error while fetching connections", err);
     }
   };
 
