@@ -17,7 +17,7 @@ const Requests = () => {
       });
       dispatch(addRequest(res.data));
     } catch (err) {
-      // console.log(err);
+      console.log(err);
     }
   };
 
@@ -30,7 +30,7 @@ const Requests = () => {
       );
       dispatch(removeRequest(_id));
     } catch (err) {
-      // console.log(err);
+      console.log(err);
     }
   };
 
@@ -39,15 +39,18 @@ const Requests = () => {
   }, []);
 
   const filteredRequests = request?.filter((req) => {
-    const name =
-      `${req.fromUser.firstName} ${req.fromUser.lastName}`.toLowerCase();
+    const name = req.fromUser
+      ? `${req.fromUser.firstName} ${req.fromUser.lastName}`.toLowerCase()
+      : "";
     return name.includes(searchTerm.toLowerCase());
   });
 
   if (!request)
     return (
       <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-pink-200 via-purple-200 to-blue-200 text-gray-900">
-        <h1 className="text-xl font-medium animate-pulse">Loading requests...</h1>
+        <h1 className="text-xl font-medium animate-pulse">
+          Loading requests...
+        </h1>
       </div>
     );
 
@@ -76,18 +79,25 @@ const Requests = () => {
 
       <div className="flex flex-col gap-6 items-center">
         {filteredRequests.length === 0 ? (
-          <p className="text-gray-600 mt-6 text-center">No matching users found.</p>
+          <p className="text-gray-600 mt-6 text-center">
+            No matching users found.
+          </p>
         ) : (
           filteredRequests.map((requests) => {
+            const user = requests.fromUser;
+            if (!user) return null;
+
             const { _id, firstName, lastName, photoUrl, age, gender, about } =
-              requests.fromUser;
+              user;
 
             return (
               <fieldset
                 key={_id}
                 className="w-full max-w-3xl bg-white/40 border border-white/30 shadow-xl rounded-2xl p-6 flex flex-col sm:flex-row items-center sm:items-start gap-6 backdrop-blur-md hover:scale-[1.01] transition"
               >
-                <legend className="sr-only">{firstName} {lastName}</legend>
+                <legend className="sr-only">
+                  {firstName} {lastName}
+                </legend>
                 <img
                   src={photoUrl}
                   alt={firstName}

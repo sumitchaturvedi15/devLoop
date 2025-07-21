@@ -12,7 +12,7 @@ const EditProfile = ({ user }) => {
   const [gender, setGender] = useState(user.gender);
   const [age, setAge] = useState(user.age || "");
   const [height, setHeight] = useState(user.height || "");
-  const [photoUrl, setPhotoUrl] = useState(user.photoUrl);
+  const [photoUrl, setPhotoUrl] = useState(user.photoUrl || "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp");
   const [skills, setSkills] = useState(user.skills || "");
   const [languages, setLanguages] = useState(user.languages || "");
   const [about, setAbout] = useState(user.about || "");
@@ -321,8 +321,6 @@ const EditProfile = ({ user }) => {
               <legend className="text-sm text-pink-600 mb-1">
                 Profile Picture:
               </legend>
-
-              {/* Manual URL Input */}
               <input
                 value={photoUrl}
                 type="url"
