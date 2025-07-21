@@ -330,44 +330,6 @@ const EditProfile = ({ user }) => {
                 placeholder="https://..."
                 onChange={(e) => setPhotoUrl(e.target.value)}
               />
-
-              {/* File Upload Input */}
-              <input
-                type="file"
-                accept="image/*"
-                onChange={async (e) => {
-                  const file = e.target.files[0];
-                  if (!file) return;
-
-                  const formData = new FormData();
-                  formData.append("photo", file);
-                  formData.append("userId", user._id);
-
-                  try {
-                    const res = await axios.post(BASE_URL+
-                      "/profile/edit/photo",
-                      formData,
-                      {
-                        headers: { "Content-Type": "multipart/form-data" },
-                      }
-                    );
-                    setPhotoUrl(res.data.user.profilePhoto);
-                  } catch (err) {
-                    console.error("Upload failed", err);
-                    alert("Failed to upload image");
-                  }
-                }}
-                className="text-sm text-gray-700"
-              />
-
-              {/* Preview Image */}
-              {photoUrl && (
-                <img
-                  src={photoUrl}
-                  alt="Preview"
-                  className="mt-2 w-24 h-24 object-cover rounded-full border"
-                />
-              )}
             </fieldset>
           </div>
 
@@ -392,6 +354,8 @@ const EditProfile = ({ user }) => {
             </Link>
           </div>
 
+        </div>
+      </div>
           {toast && (
             <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50">
               <div className="bg-green-600 text-white px-4 py-2 rounded shadow-lg animate-slide-in">
@@ -399,8 +363,6 @@ const EditProfile = ({ user }) => {
               </div>
             </div>
           )}
-        </div>
-      </div>
 
       {/* My Card Section */}
       <div className="flex items-center justify-center w-full lg:w-2/5 p-6 sm:p-8 bg-gradient-to-br from-pink-100/40 to-blue-100/40">
