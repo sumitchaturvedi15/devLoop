@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 import LeftChat from "./LeftChat";
 import RightChat from "./RightChat";
-import { useSelector } from 'react-redux';
-import axios from 'axios';
-import { BASE_URL } from '../utils/constants';
-import { createSocketConnection } from '../utils/socket';
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { BASE_URL } from "../utils/constants";
+import { createSocketConnection } from "../utils/socket";
 
 const Chat = () => {
   const [selectedConnection, setSelectedConnection] = useState(null);
@@ -20,11 +20,16 @@ const Chat = () => {
 
     const fetchChat = async () => {
       try {
-        const chat = await axios.get(`${BASE_URL}/chat/${selectedConnection._id}`, {
-          withCredentials: true,
-        });
+        const chat = await axios.get(
+          `${BASE_URL}/chat/${selectedConnection._id}`,
+          {
+            withCredentials: true,
+          }
+        );
+        const allMessages = chat?.data?.messages || [];
+        const recentMessages = allMessages.slice(-500);
 
-        const chatMessages = chat?.data?.messages.map((msg) => ({
+        const chatMessages = recentMessages.map((msg) => ({
           senderId: msg.senderId._id,
           text: msg.text,
           timestamp: msg.createdAt || new Date().toISOString(),
@@ -66,32 +71,34 @@ const Chat = () => {
   }, [userId, selectedConnection]);
 
   const sendMessage = () => {
-  if (!newMessage.trim() || !socketRef.current) return;
+    if (!newMessage.trim() || !socketRef.current) return;
 
-  const timestamp = new Date().toISOString();
-  const messageData = {
-    senderId: userId,
-    text: newMessage,
-    timestamp,
-    firstName: user.firstName,
-    lastName: user.lastName,
+    const timestamp = new Date().toISOString();
+    const messageData = {
+      senderId: userId,
+      text: newMessage,
+      timestamp,
+      firstName: user.firstName,
+      lastName: user.lastName,
+    };
+
+    socketRef.current.emit("sendMessage", {
+      userId,
+      targetUser: selectedConnection._id,
+      newMessage: messageData,
+    });
+
+    setNewMessage("");
   };
-
-  socketRef.current.emit("sendMessage", {
-    userId,
-    targetUser: selectedConnection._id,
-    newMessage: messageData,
-  });
-
-  setNewMessage("");
-};
-
 
   return (
     <div className="flex flex-col md:flex-row h-screen min-h-screen overflow-hidden">
       {/* Left Chat Section */}
       <div className="w-full md:w-1/3 lg:w-1/4 h-1/2 md:h-full border-r border-gray-300 bg-gradient-to-br from-pink-200 via-purple-200 to-blue-200 text-gray-900 overflow-y-auto">
-        <LeftChat onSelect={setSelectedConnection} selectedConnection={selectedConnection} />
+        <LeftChat
+          onSelect={setSelectedConnection}
+          selectedConnection={selectedConnection}
+        />
       </div>
 
       {/* Right Chat Section */}

@@ -28,8 +28,12 @@ const TargetChat = () => {
       const chat = await axios.get(BASE_URL + "/chat/" + targetUser, {
         withCredentials: true,
       });
+      const allMessages = chat?.data?.messages || [];
 
-      const chatMessages = chat?.data?.messages.map((msg) => ({
+      // Get the last 100 messages only
+      const recentMessages = allMessages.slice(-500);
+
+      const chatMessages = recentMessages.map((msg) => ({
         senderId: msg.senderId._id,
         text: msg.text,
         timestamp: msg.createdAt || new Date().toISOString(),
@@ -126,7 +130,8 @@ const TargetChat = () => {
       if (
         !prev ||
         prev.senderId !== msg.senderId ||
-        dayjs(prev.timestamp).format("YYYY-MM-DD") !== dayjs(msg.timestamp).format("YYYY-MM-DD")
+        dayjs(prev.timestamp).format("YYYY-MM-DD") !==
+          dayjs(msg.timestamp).format("YYYY-MM-DD")
       ) {
         if (currentGroup.length) grouped.push(currentGroup);
         currentGroup = [msg];
@@ -143,7 +148,6 @@ const TargetChat = () => {
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-pink-200 to-blue-200 text-black flex flex-col items-center py-6 px-2 md:px-6">
-      
       <div className="w-full max-w-3xl flex items-center gap-4 px-4 py-4 mb-6 bg-white/50 backdrop-blur rounded-xl border border-white/30 shadow-lg text-black">
         <Link
           to="/connections"
@@ -157,13 +161,21 @@ const TargetChat = () => {
             stroke="currentColor"
             className="w-4 h-4 transition-transform duration-200 group-hover:-translate-x-1"
           >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M15.75 19.5L8.25 12l7.5-7.5"
+            />
           </svg>
           Back
         </Link>
 
         {targetUserInfo.photoUrl && (
-          <img src={targetUserInfo.photoUrl} alt="Target" className="h-10 w-10 rounded-full object-cover border border-pink-400 shadow" />
+          <img
+            src={targetUserInfo.photoUrl}
+            alt="Target"
+            className="h-10 w-10 rounded-full object-cover border border-pink-400 shadow"
+          />
         )}
 
         <span className="text-lg md:text-2xl font-semibold truncate">
@@ -178,17 +190,26 @@ const TargetChat = () => {
             const isSender = group[0].senderId === userId;
             const showName = group[0].firstName && group[0].lastName;
             return (
-              <div key={idx} className={`flex flex-col ${isSender ? "items-end" : "items-start"}`}>
+              <div
+                key={idx}
+                className={`flex flex-col ${
+                  isSender ? "items-end" : "items-start"
+                }`}
+              >
                 {showName && (
                   <div className="text-xs font-semibold text-gray-600 mb-1">
-                    {isSender ? "You" : `${group[0].firstName} ${group[0].lastName}`}
+                    {isSender
+                      ? "You"
+                      : `${group[0].firstName} ${group[0].lastName}`}
                   </div>
                 )}
                 {group.map((msg, i) => (
                   <div
                     key={i}
                     className={`relative group max-w-xs md:max-w-sm px-4 py-2 my-1 rounded-2xl text-sm shadow transition-all duration-300 ${
-                      isSender ? "bg-pink-500 text-white" : "bg-blue-200 text-black border border-white/20"
+                      isSender
+                        ? "bg-pink-500 text-white"
+                        : "bg-blue-200 text-black border border-white/20"
                     }`}
                   >
                     <span>{msg.text}</span>
@@ -226,4 +247,3 @@ const TargetChat = () => {
 };
 
 export default TargetChat;
-
